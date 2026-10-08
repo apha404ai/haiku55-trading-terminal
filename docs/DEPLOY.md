@@ -35,7 +35,7 @@ Leave AI_MODE=0 while testing the basic trading engine. For true API calls, conf
 
 ## What cannot be done from a GitHub repo alone
 
-A public GitHub repository does not provide a constantly running Python application. HTML opened directly from GitHub is a separate, original animation and does not connect to the Python backend automatically. Deploy the provided Dockerfile to a server to access the live-data PAPER dashboard.
+A public GitHub repository does not provide a constantly running Python application. The static #21/#22 HTML mockups in `frontend/legacy/` are visual-only designs with no JavaScript or backend dependency; they are not the live-data dashboard. Deploy the provided Dockerfile to a server to access the separate paper-trading backend dashboard at `/`. Deploy the provided Dockerfile to a server to access the live-data PAPER dashboard.
 
 ## Troubleshooting
 

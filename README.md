@@ -116,4 +116,4 @@ On a public Railway domain the GET account data is public. Use private hosting o
 - docs/SECURITY.md — known limits
 - tests/test_engine.py — no-network regression tests
 
-These concepts are adapted from the author's Mason333xbt/writer source branch claude/pensive-volta-lathuj. The original Git blobs were preserved in earlier commits; current HTML files are visual-only adaptations with permanent @alpha404ai watermarks. Open either file directly from the folder in a browser (its mockup.css and ../assets/*.png files must stay alongside it). The $HAIKU55 ticker mentioned in social posts is not an integrated token or deployment instruction.
+These concepts are adapted from the author's Mason333xbt/writer source branch claude/pensive-volta-lathuj. The original Git blobs were preserved in earlier commits; current HTML files are visual-only adaptations with permanent @alpha404ai watermarks. **Both files are fully self-contained**: inline CSS and original embedded PNG logos, no JavaScript or network access. Download a single .html and open it locally in a browser. The $HAIKU55 ticker mentioned in social posts is not an integrated token or deployment instruction.

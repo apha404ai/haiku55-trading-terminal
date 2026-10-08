@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  python-and-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile Python modules
+        run: python -m compileall -q app tests
+      - name: Unit tests (no network and no API keys)
+        run: python -m unittest discover -s tests -v
+      - name: Check JavaScript syntax
+        run: node --check frontend/app.js
+      - name: Server integration smoke test
+        shell: bash
+        run: |
+          CONTROL_TOKEN=ci-test-only AUTO_PAPER=0 PORT=18999 DB_PATH=:memory: python -m app.server &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          python - <<'PY'
+          import json, time, urllib.request
+          base = 'http://127.0.0.1:18999'
+          for _ in range(25):
+              try:
+                  with urllib.request.urlopen(base + '/health', timeout=2) as r:
+                      assert json.load(r)['ok']
+                  break
+              except Exception:
+                  time.sleep(.2)
+          else:
+              raise AssertionError('Server did not come online')
+          with urllib.request.urlopen(base + '/api/status') as r:
+              status = json.load(r)
+              assert status['mode'] == 'PAPER'
+          with urllib.request.urlopen(base) as r:
+              assert b'HAIKU55' in r.read()
+          req = urllib.request.Request(base + '/api/control', data=b'{"action":"pause"}', method='POST',
+              headers={'Content-Type':'application/json','Authorization':'Bearer ci-test-only'})
+          with urllib.request.urlopen(req) as r:
+              assert json.load(r)['ok']
+          print('HTTP smoke passed (no real exchange orders)')
+          PY

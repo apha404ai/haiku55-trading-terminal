@@ -5,6 +5,6 @@ The original dashboard interfaces are copied with the owner's permission from [`
 - `terminals/21-haiku-desk.html`
 - `terminals/22-haiku-core.html`
 
-They were designed as animated **simulations**. Market prices, model dialogue, execution events and historical PnL are generated in-browser and are not evidence of real trading performance. The copied source files remain unchanged under `frontend/legacy/`.
+They were designed as animated **simulations**. Market prices, model dialogue, execution events and historical PnL are generated in-browser and are not evidence of real trading performance. The *original versions* were initially copied without changes into `frontend/legacy/` and are accessible in earlier Git history. The current #21/#22 files in that folder are **static, no-JavaScript redesigns**: no simulator, countdown, speed/pause/reset buttons, AI API calls or generated trades. Both visibly retain `@alpha404ai` in a fixed watermark. Logos are available as PNG assets in `frontend/assets/`.
 
 All new code starts with paper trading; live orders require additional implementation, validation and explicit operator controls.

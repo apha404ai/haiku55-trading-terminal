@@ -1,5 +1,6 @@
 """Static terminal HTML must remain a branded mockup, not an execution simulator."""
 import re
+import base64
 import unittest
 from html.parser import HTMLParser
 from pathlib import Path
@@ -42,9 +43,9 @@ class StaticMockupTests(unittest.TestCase):
                 self.assertIn("STATIC", content)
                 self.assertIn("NO", content)
                 for image in parser.images:
-                    self.assertTrue((LEGACY / image).resolve().is_file(), image)
-                for css in parser.stylesheets:
-                    self.assertTrue((LEGACY / css).resolve().is_file(), css)
+                    self.assertTrue(image.startswith("data:image/png;base64,"), "Standalone HTML must embed PNGs")
+                    self.assertTrue(base64.b64decode(image.split(",", 1)[1], validate=True).startswith(b"\x89PNG\r\n\x1a\n"))
+                self.assertFalse(parser.stylesheets, "Standalone HTML must embed its CSS")
 
     def test_legacy_styles_are_static(self):
         css = (LEGACY / "mockup.css").read_text()

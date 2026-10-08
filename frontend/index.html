@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08030c">
+<title>HAIKU55 | 24/7 Paper Trading Desk</title>
+<style>
+:root{color-scheme:dark;--bg:#09050e;--panel:#150b20;--panel2:#1b1028;--line:#372044;--txt:#faf2ff;--muted:#aa93b7;--pink:#ff3999;--lav:#a987ff;--green:#3df5b8;--red:#ff567a;--gold:#ffc85b}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--txt);font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}button,input,select{font:inherit}button{cursor:pointer}
+body{background:radial-gradient(ellipse at 18% -12%,#43205077,transparent 55%),radial-gradient(ellipse at 90% 10%,#2a135655,transparent 48%),var(--bg)}
+.wrap{max-width:1600px;margin:auto;padding:20px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:13px}.orb{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 30% 28%,#fff1ff,var(--pink) 34%,#7c195f 70%);box-shadow:0 0 30px #ff399966;position:relative}.orb:after{content:"";position:absolute;inset:-7px;border:1px solid #ff399955;border-radius:50%;animation:orbit 7s linear infinite}@keyframes orbit{50%{transform:scale(1.19);opacity:.35}}
+h1{font-size:26px;line-height:1;letter-spacing:.06em;margin:0;font-family:system-ui,sans-serif;font-weight:850}h1 span{color:var(--pink)}.sub{color:var(--muted);font-size:11px;letter-spacing:.13em;margin-top:5px}
+.top-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.chip{border:1px solid var(--line);color:var(--muted);padding:7px 10px;border-radius:7px;font-size:11px;letter-spacing:.1em}.chip.paper{border-color:#ff39996a;color:#ff8bc4}.chip.good{color:var(--green);border-color:#3df5b866}.chip.bad{color:var(--red);border-color:#ff567a66}.chip.warn{color:var(--gold);border-color:#ffc85b66}.chip strong{color:var(--txt)}
+.notice{margin-bottom:16px;background:#4214288c;border:1px solid #b9457866;padding:10px 14px;border-radius:9px;color:#ffbdd6;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:12px}.card{background:linear-gradient(160deg,#1c102abf,#110819f2);border:1px solid var(--line);border-radius:12px;min-width:0;overflow:hidden;box-shadow:0 5px 24px #0002}.pad{padding:17px}.lbl{font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);font-weight:700}.val{font-family:system-ui,sans-serif;font-size:30px;letter-spacing:-.035em;font-weight:800;margin:10px 0 3px}.muted{color:var(--muted)}.green{color:var(--green)}.red{color:var(--red)}.pink{color:var(--pink)}.lav{color:var(--lav)}.gold{color:var(--gold)}.foot{font-size:11px;color:var(--muted)}
+.main{display:grid;grid-template-columns:1.2fr 2.3fr 1.18fr;gap:12px;grid-template-areas:"pairs chart council" "orders chart ops" "orders trades ops" "events events events";align-items:stretch}.pairs{grid-area:pairs}.chart{grid-area:chart}.council{grid-area:council}.orders{grid-area:orders}.trades{grid-area:trades}.ops{grid-area:ops}.events{grid-area:events}
+.head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:12px 15px;gap:10px}.head b{letter-spacing:.08em;font-size:11px}.body{padding:14px}.pair{padding:12px 10px;border-bottom:1px solid #37204488;display:grid;grid-template-columns:1fr auto;gap:4px}.pair:last-child{border:0}.pair b{font-size:15px}.pair .price{font-weight:800;font-size:16px;text-align:right}.pair .n{font-size:10px;color:var(--muted)}.pair.active{background:#9f36711b}.chartMeta{display:flex;gap:18px;flex-wrap:wrap;font-size:11px;margin-bottom:10px;color:var(--muted)}.chartMeta strong{color:var(--txt)}#priceChart{display:block;width:100%;height:315px;background:linear-gradient(180deg,#27103922,transparent);border-radius:8px}
+.legend{display:flex;justify-content:space-between;gap:5px;flex-wrap:wrap;margin-top:8px;color:var(--muted);font-size:10px}
+.agent{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid #37204488}.agent:last-child{border:0}.circle{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#392041;font-weight:bold;border:1px solid #ffffff22;color:var(--pink)}.agentName{display:flex;gap:10px;align-items:center}.agentName b{font:700 12px system-ui}.agentName small{display:block;font-size:9px;letter-spacing:.08em;color:var(--muted)}.vote{font-weight:bold;font-size:10px}
+.field{display:grid;gap:6px;margin-bottom:10px}.field label{font-size:10px;color:var(--muted);letter-spacing:.1em}.field input,.field select{background:#0b0612;color:var(--txt);border:1px solid var(--line);padding:10px 12px;border-radius:7px;min-width:0;width:100%}
+button{color:var(--txt);background:#24142f;border:1px solid #543166;padding:10px 12px;border-radius:7px;font-weight:750;transition:.15s}button:disabled{opacity:.4;cursor:not-allowed}button:not(:disabled):hover{border-color:var(--pink);background:#422347}.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.btnrow button{flex:1;min-width:73px}.long{color:#021912;background:var(--green);border-color:var(--green)}.short{color:#fff;background:#ab2749;border-color:#ab2749}.kill{background:#3c0d1f;color:#ffb6c5;border-color:#bd3964}.mini{font-size:10px;padding:6px 9px}
+.tabler{overflow:auto}table{border-collapse:collapse;width:100%;font-size:11px;white-space:nowrap}td,th{padding:9px 8px;border-bottom:1px solid #3720449c;text-align:left}th{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em}td:last-child,th:last-child{text-align:right}#positions td{font-weight:600}.empty{color:var(--muted);padding:18px;text-align:center}
+.logs{max-height:275px;overflow:auto;font-size:11px}.log{display:grid;grid-template-columns:110px 65px 1fr;gap:12px;padding:7px 0;border-bottom:1px dashed #51305563}.log time{color:var(--muted)}.log b{color:var(--lav)}
+.riskrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #372044;color:var(--muted);font-size:11px}.riskrow strong{color:var(--txt)}.msg{font-size:11px;color:var(--muted);min-height:19px;overflow-wrap:anywhere}.links{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}.links a{color:var(--lav);font-size:11px}
+.footer{color:var(--muted);font-size:10px;margin-top:18px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.main{grid-template-columns:1fr 1.5fr;grid-template-areas:"pairs chart" "council chart" "orders ops" "trades trades" "events events"}}@media(max-width:700px){.wrap{padding:10px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.val{font-size:23px}.main{display:flex;flex-direction:column}.pad{padding:12px}#priceChart{height:250px}.log{grid-template-columns:60px 54px 1fr;gap:5px}.top{gap:10px}.brand h1{font-size:22px}.notice{font-size:11px}}
+</style></head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="orb"></div><div><h1>HAIKU<span>55</span> / DESK</h1><div class="sub">ALPHA404 · AUTONOMOUS PAPER TERMINAL · UTC</div></div></div>
+    <div class="top-right">
+      <span class="chip paper">PAPER ONLY</span><span class="chip" id="feed">CONNECTING</span>
+      <span class="chip" id="autostatus">SCANNING</span><span class="chip" id="clock">UTC --:--:--</span>
+    </div>
+  </header>
+  <div class="notice">SIMULATION OF ORDERS, REAL PUBLIC MID-PRICES WHEN CONNECTED. No exchange orders, wallets, API trading permissions or guaranteed returns. Model votes only appear when provider keys are configured and calls succeed.</div>
+  <div class="stats">
+    <section class="card pad"><div class="lbl">Paper equity</div><div class="val" id="equity">--</div><div class="foot">Mark-to-market · USD</div></section>
+    <section class="card pad"><div class="lbl">Net paper PnL</div><div class="val" id="net">--</div><div class="foot">From starting balance</div></section>
+    <section class="card pad"><div class="lbl">Day realized PnL</div><div class="val" id="today">--</div><div class="foot">UTC risk day</div></section>
+    <section class="card pad"><div class="lbl">Paper win rate</div><div class="val" id="wr">--</div><div class="foot" id="count">0 closed positions</div></section>
+    <section class="card pad"><div class="lbl">Exposure</div><div class="val" id="exposure">--</div><div class="foot">Concurrent paper positions</div></section>
+  </div>
+  <main class="main">
+    <section class="card pairs"><div class="head"><b>MARKET / HYPERLIQUID</b><span class="chip" id="marketAge">--</span></div><div class="body" id="pairs"><div class="empty">Waiting for live mids...</div></div></section>
+    <section class="card chart"><div class="head"><b id="chartTitle">BTC / PAPER MARKET</b><span class="chip">PUBLIC DATA</span></div><div class="body"><div class="chartMeta"><span>Mid <strong id="mid">--</strong></span><span>Samples <strong id="samples">--</strong></span><span>Source <strong>Hyperliquid</strong></span></div><canvas id="priceChart"></canvas><div class="legend"><span class="pink">● INDICATIVE MID PRICE</span><span id="chartRange">Waiting for samples</span><span>5s polling</span></div></div></section>
+    <section class="card council"><div class="head"><b>HAIKU / AI COUNCIL</b><span class="chip" id="aiMode">UNCONFIGURED</span></div><div class="body">
+      <div class="agent"><span class="agentName"><span class="circle">H</span><span><b>HAIKU</b><small>HEAD · ORCHESTRATOR</small></span></span><span class="vote" id="vote-HAIKU">OFFLINE</span></div>
+      <div class="agent"><span class="agentName"><span class="circle">G</span><span><b>GPT</b><small>RISK REVIEW</small></span></span><span class="vote" id="vote-GPT">OFFLINE</span></div>
+      <div class="agent"><span class="agentName"><span class="circle">X</span><span><b>GROK</b><small>SENTIMENT REVIEW</small></span></span><span class="vote" id="vote-GROK">OFFLINE</span></div>
+      <div class="agent"><span class="agentName"><span class="circle">M</span><span><b>GEMINI</b><small>MARKET REVIEW</small></span></span><span class="vote" id="vote-GEMINI">OFFLINE</span></div>
+      <p class="lbl" style="margin-top:16px">LATEST PRE-FILTER / COUNCIL</p><div class="msg" id="decision">No signals processed yet</div>
+    </div></section>
+    <section class="card orders"><div class="head"><b>ORDER / PAPER EXECUTION</b><span class="chip">HARD RISK GATE</span></div><div class="body">
+      <div class="field"><label>SYMBOL</label><select id="symbol"><option>BTC</option><option>ETH</option><option>SOL</option></select></div>
+      <div class="field"><label>CONTROL TOKEN (not saved on server)</label><input type="password" id="token" placeholder="CONTROL_TOKEN from your deployment" autocomplete="off"></div>
+      <div class="btnrow"><button class="long" data-order="LONG">PAPER LONG</button><button class="short" data-order="SHORT">PAPER SHORT</button></div>
+      <div class="btnrow"><button data-control="pause">PAUSE</button><button data-control="resume">RESUME</button><button class="kill" data-control="kill">KILL</button></div>
+      <div class="btnrow"><button id="close">CLOSE SELECTED</button><button id="refresh">REFRESH</button></div>
+      <div class="msg" id="actionMsg">Controls require a server-side CONTROL_TOKEN.</div>
+      <p class="lbl" style="margin-top:14px">RISK POLICY</p><div id="risk"></div>
+    </div></section>
+    <section class="card trades"><div class="head"><b>OPEN POSITIONS</b><span class="chip" id="posCount">0 OPEN</span></div><div class="body tabler"><table><thead><tr><th>PAIR</th><th>SIDE</th><th>ENTRY</th><th>STOP / TP</th><th>PnL</th></tr></thead><tbody id="positions"><tr><td colspan="5">No open positions</td></tr></tbody></table></div></section>
+    <section class="card ops"><div class="head"><b>24/7 SERVICE STATUS</b><span class="chip" id="serviceStatus">STARTING</span></div><div class="body">
+      <div id="operations"></div>
+      <p class="lbl" style="margin-top:14px">SAFETY</p><div class="msg">If market data goes stale, new trades are blocked. After a kill, the system stays locked even after restart; paper positions may remain open if feed is stale. Use one running replica with persistent storage.</div>
+      <div class="links"><a href="/health" target="_blank" rel="noopener">Health JSON</a><a href="/api/trades" target="_blank" rel="noopener">Trade ledger</a><a href="https://github.com/apha404ai/haiku55-trading-terminal" target="_blank" rel="noopener">Source on GitHub</a></div>
+    </div></section>
+    <section class="card events"><div class="head"><b>EXECUTION LOG / 30 EVENTS</b><span class="chip" id="logCount">--</span></div><div class="body logs" id="events"><div class="empty">No events yet</div></div></section>
+  </main>
+  <div class="footer"><span>ALPHA404 · HAIKU55 · PAPER MODE / 24:7 RUNTIME</span><span id="updated">Not updated</span></div>
+</div>
+<script src="/static/app.js" defer></script>
+</body></html>

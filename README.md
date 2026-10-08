@@ -4,7 +4,7 @@
 
 [![CI](https://github.com/apha404ai/haiku55-trading-terminal/actions/workflows/ci.yml/badge.svg)](https://github.com/apha404ai/haiku55-trading-terminal/actions/workflows/ci.yml)
 
-> PAPER ONLY. This project does **not** place actual orders or trade real money. Public mid-prices can be real, but position execution and PnL are simulated. The original HTML scenes are animations with **entirely synthetic** market data and PnL. No investment returns are promised.
+> PAPER ONLY. This project does **not** place actual orders or trade real money. Public mid-prices can be real, but position execution and PnL are simulated. The archived originals were animated simulations with **entirely synthetic** market data and PnL; the public #21/#22 HTML files have now been converted into **static visual mockups**. No investment returns are promised.
 
 ## What works
 
@@ -15,7 +15,7 @@
 - SQLite persistence for paper positions, closed trades and audit events.
 - Authenticated paper LONG, SHORT, CLOSE, PAUSE, RESUME and latching KILL.
 - Optional four-model AI council using configurable APIs: Anthropic (Haiku head), OpenAI (GPT), xAI (Grok), Google (Gemini). No model can bypass the hard-coded risk gate.
-- Original #21 Haiku Desk and #22 Haiku Core HTML, unchanged, in frontend/legacy/.
+- Static, watermarked **#21 Haiku Desk** and **#22 Haiku Core** HTML concept layouts in frontend/legacy/: no JS, random numbers, timers, speed buttons, trading controls or model calls. The original versions remain identifiable in earlier Git history.
 - Dockerfile, Railway config, automated CI and regression tests.
 
 ## Operating modes
@@ -109,11 +109,11 @@ On a public Railway domain the GET account data is public. Use private hosting o
 - app/engine.py — SQLite paper orders and deterministic trade risk
 - app/council.py — optional four-provider review
 - frontend/index.html + frontend/app.js — live-data paper dashboard
-- frontend/legacy/21-haiku-desk.html — original untouched animation
-- frontend/legacy/22-haiku-core.html — original untouched animation
+- frontend/legacy/21-haiku-desk.html — static, watermarked HTML mockup (no simulation)
+- frontend/legacy/22-haiku-core.html — static, watermarked HTML mockup (no simulation)
 - docs/SOURCE.md — source and transparency
 - docs/DEPLOY.md — hosting steps
 - docs/SECURITY.md — known limits
 - tests/test_engine.py — no-network regression tests
 
-Original animations credited to the author's Mason333xbt/writer source branch claude/pensive-volta-lathuj. Their exact Git blob hashes were preserved during copying. The $HAIKU55 ticker mentioned in social posts is not an integrated token or deployment instruction.
+These concepts are adapted from the author's Mason333xbt/writer source branch claude/pensive-volta-lathuj. The original Git blobs were preserved in earlier commits; current HTML files are visual-only adaptations with permanent @alpha404ai watermarks. Open either file directly from the folder in a browser (its mockup.css and ../assets/*.png files must stay alongside it). The $HAIKU55 ticker mentioned in social posts is not an integrated token or deployment instruction.
